@@ -1,0 +1,15 @@
+.col-width{
+    min-width: 100px;
+}
+
+.price-original span{
+    text-decoration-line: line-through;
+}
+
+.list-info > div{
+    margin-bottom: 20px;
+    .value{
+        font-weight: bold;
+        margin-right: 20px;
+    }
+}

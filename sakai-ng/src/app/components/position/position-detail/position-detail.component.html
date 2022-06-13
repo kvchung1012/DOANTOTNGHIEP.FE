@@ -1,0 +1,100 @@
+<div>
+    <p-tabView>
+      <p-tabPanel header="Cập nhật chức vụ">
+        <div>
+            <form [formGroup]="infoForm">
+                <div class="grid p-fluid">
+                    <div class="col-12 md:col-6">
+                        <div class="p-field mb-3">
+                            <label for="name">Tên chức vụ</label>
+                            <input formControlName="name" id="name" type="text" class="p-invalid" pInputText/>
+                            <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('name').errors?.required">
+                                Tên chức vụ không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="name">Mô tả chức vụ</label>
+                            <input formControlName="description" id="description" type="text" class="p-invalid" pInputText />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-content-end">
+                    <button pButton pRipple type="button" label="Hủy bỏ" class="p-button-danger mr-1" (click)="close()"></button>
+                    <button pButton pRipple type="button" [label]="'Cập nhật'" (click)="save()"></button>
+                </div>
+            </form>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Nhân viên" *ngIf="postionDto.id > 0">
+        <div>
+            <div class="grid">
+                <div class="col-12 sm:col-3">
+                    <div class="p-field mb-3">
+                        <label for="status">Chọn nhân viên</label>
+                        <p-dropdown [options]="staffs"
+                            placeholder="Chọn nhân viên"
+                            styleClass="w-full"
+                            [(ngModel)]="staffSelected.user"
+                            optionLabel="fullName"
+                            [showClear]="true"
+                            [filter]="true" filterBy="fullName" filterBy="userName" filter="phone" filterBy="email">
+                        </p-dropdown>
+                    </div>
+
+                    <div class="p-field mb-3">
+                        <label for="name">Ngày bắt đầu</label>
+                        <p-calendar inputId="basic" appendTo="body" [(ngModel)]="staffSelected.startTime" dateFormat="dd/mm/yy" styleClass="w-full"></p-calendar>
+                    </div>
+
+                    <div class="p-field mb-3">
+                        <label for="name">Ngày kết thúc</label>
+                        <p-calendar inputId="basic" appendTo="body" [(ngModel)]="staffSelected.endTime" dateFormat="dd/mm/yy"  styleClass="w-full"></p-calendar>
+                    </div>
+                    <div class="flex justify-content-end">
+                        <!-- <button pButton pRipple type="button" class="p-button-outlined p-button-danger  mr-2" (click)="cancelEdit()" label="Hủy bỏ"></button> -->
+                        <button pButton pRipple type="button" class="p-button-outlined" [label]="staffSelected.userPositionId == 0?'Thêm mới':'Cập nhật'" (click)="addStaff()"></button>
+                    </div>
+                </div>
+
+                <div class="col-12 sm:col-9 grid" style="max-height: 400px; overflow-y: scroll;">
+                    <div class="col-12 sm:col-6 md:col-4" *ngFor="let item of staffInPosition" >
+                        <div class="card p-2" (click)="chooseEdit(item)">
+                            <div class="flex align-items-center">
+                                <p-avatar
+                                    label="VC"
+                                    styleClass="p-mr-2"
+                                    size="large"
+                                    shape="circle">
+                                </p-avatar>
+
+                                <div class="staff-info m-2">
+                                    <div>
+                                        <b>{{item.fullName}}</b>
+                                    </div>
+                                    <div style="font-size: 0.8rem;">
+                                        <span>{{item.phone}}</span>
+                                    </div>
+                                    <div style="font-size: 0.8rem;">
+                                        <span>{{item.email}}</span>
+                                    </div>
+
+                                    <div style="font-size: 0.8rem;">
+                                        <span>{{item.startTime | date : 'dd/MM/yyyy'}} - {{item.endTime == null ? 'Hiện tại' : (item.endTime | date : 'dd/MM/yyyy')}}</span>
+                                    </div>
+                                </div>
+
+                                <i style="color: red;" class="pi pi-trash" (click)="removeStaff(item)"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>

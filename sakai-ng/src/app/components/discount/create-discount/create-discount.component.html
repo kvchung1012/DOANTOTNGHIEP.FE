@@ -1,0 +1,104 @@
+<form [formGroup]="infoForm">
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6">
+            <div class="p-field mb-3">
+                <label for="username2">Mã khuyến mãi</label>
+                <input formControlName="code" id="code" type="text" class="p-invalid" pInputText/>
+                <small id="code-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('code').errors?.required">
+                    Mã khuyễn mãi không được để trống.
+                </small>
+            </div>
+
+            <div class="p-field mb-3">
+                <label for="name">Tên khuyễn mãi</label>
+                <input formControlName="name" id="name" type="text" class="p-invalid" pInputText />
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('name').errors?.required">
+                    Tên khuyến mãi mục không được để trống.
+                </small>
+            </div>
+
+            <div class="p-field mb-3">
+                <label for="status">Trạng thái danh mục</label>
+                <p-dropdown [options]="listStatus"
+                    formControlName="status"
+                    placeholder="Chọn trạng thái"
+                    optionLabel="name"
+                    optionValue="id"
+                    [showClear]="true">
+                </p-dropdown>
+                <small id="status-help" class="p-error p-invalid" *ngIf="submited && (infoForm.get('status').errors?.min || infoForm.get('status').errors?.required)">
+                    Trạng thái danh mục không được để trống.
+                </small>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="p-field mb-3">
+                <label for="saleType">Loại giảm giá</label>
+                <p-dropdown [options]="listSaleType"
+                    formControlName="saleType"
+                    placeholder="Chọn loại giảm giá"
+                    optionLabel="label"
+                    optionValue="value"
+                    [showClear]="true">
+                </p-dropdown>
+                <small id="status-help" class="p-error p-invalid" *ngIf="submited && (infoForm.get('saleType').errors?.min || infoForm.get('saleType').errors?.required)">
+                    Loại giảm giá không được để trống.
+                </small>
+            </div>
+
+            <div class="p-field mb-3">
+                <label for="name">Giá trị giảm</label>
+                <input formControlName="value" type="number" class="p-invalid" pInputText />
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('value').errors?.required">
+                    Giá trị giảm giá không được để trống.
+                </small>
+            </div>
+
+            <!-- thời gian bắt đầu -->
+            <div class="p-field mb-3">
+                <label for="startTime">Thời gian bắt đầu</label>
+                <p-calendar formControlName="startTime" appendTo="body"></p-calendar>
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('startTime').errors?.required">
+                    Giá trị giảm giá không được để trống.
+                </small>
+            </div>
+
+            <!-- thời gian kết thúc -->
+            <div class="p-field mb-3">
+                <label for="endTime">Thời gian kết thúc</label>
+                <p-calendar formControlName="endTime" appendTo="body" ></p-calendar>
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('endTime').errors?.required">
+                    Giá trị giảm giá không được để trống.
+                </small>
+            </div>
+
+            <!-- chọn sản phẩm giảm giá -->
+            <div class="p-field mb-3">
+                <label for="productDiscount">Chọn sản phẩm</label>
+                <p-multiSelect [options]="listProduct"
+                    [(ngModel)]="discount.productDiscount"
+                    formControlName="productDiscount"
+                    appendTo="body"
+                    defaultLabel="Chọn sản phẩm"
+                    optionLabel="name"
+                    optionValue="id"
+	                display="chip">
+                </p-multiSelect>
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && (infoForm.get('productDiscount').errors?.required || discount.productDiscount.length ==0)">
+                    Sản phẩm không được để trống.
+                </small>
+            </div>
+        </div>
+
+
+        <div class="col-12 md:col-6">
+
+        </div>
+    </div>
+
+    <div class="flex justify-content-end">
+        <button pButton pRipple type="button" label="Hủy bỏ" class="p-button-danger mr-1" (click)="close()"></button>
+        <button pButton pRipple type="button" label="Thêm mới" (click)="save()"></button>
+    </div>
+</form>

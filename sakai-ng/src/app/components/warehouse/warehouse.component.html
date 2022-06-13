@@ -1,0 +1,118 @@
+<div class="grid">
+    <div class="col-12 md:col-3">
+        <div class="card full-height" (scroll)="fetchMaterial()">
+            <div class="warehouse-title">
+                <h6>Thông tin kho hàng</h6>
+            </div>
+
+            <div class="warehouse-body grid">
+                <div class="col-12 warehouse-item" *ngFor="let item of listMaterial">
+                    <div class="card p-2 mb-1" [ngClass]="{'material-select': currentMaterial != null && currentMaterial.id == item.id}" (click)="chooseMaterial(item)">
+                        <p class="m-1"><b>{{item.materialCode}} - {{item.materialName}}</b></p>
+                        <span style="font-size: 0.8rem;">Số lượng: {{item.stock}} {{item.unitName}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-12 md:col-3">
+        <div class="card full-height">
+            <div>
+                <h6>Thông tin chi tiết nguyên liệu</h6>
+            </div>
+            <div class="list-detail grid">
+                <div class="col-12" (click)="exportMaterial(item)" *ngFor="let item of listDetail">
+                    <div class="card p-3 mb-1" [ngClass]="{'material-detail-select':checkMaterialDetailSelected(item)}">
+                        <div>
+                            <p class="p-0"><b>{{item.code}}</b></p>
+                        </div>
+                        <div style="font-size: 0.85rem;">
+                            <span>{{item.startDate | date :'dd/MM/yyyy'}} - {{item.expriedDate | date :'dd/MM/yyyy'}}</span>
+                        </div>
+                        <div style="font-size: 0.85rem;">
+                            <span>Số lượng: {{item.stock}} {{item.unitName}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+        <div class="card full-height">
+            <div class="flex justify-content-between align-items-center mb-2">
+                <h6 class="m-0">Phiếu xuất kho</h6>
+                <button pButton pRipple type="button" icon="pi pi-plus" label="Xuất kho" (click)="export()"
+                                            class="p-button-sm p-button-outlined"></button>
+            </div>
+
+            <div class="card">
+                <form [formGroup]="infoForm">
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <div class="p-field">
+                                <label for="description">Mô tả</label>
+                                <input formControlName="description" type="text"
+                                    class="w-full p-invalid" pInputText />
+                                    <small id="name-help" class="p-error p-invalid"
+                                        *ngIf="submited && infoForm.get('description').errors?.required">
+                                        Tên danh mục không được để trống.
+                                    </small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <div class="p-field">
+                                <label for="exportTo">Người yêu cầu</label>
+                                <p-dropdown formControlName="exportTo" [options]="listStaff"
+                                    placeholder="Người yêu cầu" optionLabel="fullName" optionValue="id" styleClass="w-full"
+                                    [showClear]="true">
+                                </p-dropdown>
+
+                                <small id="name-help" class="p-error p-invalid"
+                                        *ngIf="submited && infoForm.get('exportTo').errors?.required">
+                                        Nhà cung cấp không được để trống.
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="p-field">
+                                <label for="note">Ghi chú</label>
+                                <textarea formControlName="note" [rows]="5"  type="text" class="p-invalid w-full"
+                                pInputText></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <h6>Chi tiết thông tin xuất hàng</h6>
+
+                <div>
+                    <div *ngFor="let item of listExport">
+                        <div class="flex align-item-center card">
+                            <h6 class="m-0 text-black">{{item.materialCode}} - {{item.materialName}}</h6>
+                        </div>
+                        <div class="grid">
+                            <div class="col-12 md:col-6" *ngFor="let sub of item.detail">
+                                <div class="card m-0">
+                                    <div>
+                                        {{sub.code}}
+                                    </div>
+                                    <div>
+                                        Số lượng: {{sub.stock}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<div class="list-column grid p-fluid">
+    <div class="col-12">
+        <div class="item-column mb-2" *ngFor="let item of listColumn">
+            <div [ngSwitch]="item.dataTypeId" class="line-filter">
+                <!-- number -->
+                <div *ngSwitchCase="1">
+                    <div class="p-field">
+                        <label htmlFor="{{item.columnName}}">{{item.columnHeader}}</label>
+                        <p-inputNumber mode="decimal" inputId="withoutgrouping" [useGrouping]="false" class="w-full" [(ngModel)]="item.value">
+                        </p-inputNumber>
+                    </div>
+                </div>
+
+                <!-- string -->
+                <div *ngSwitchCase="2">
+                    <div class="p-field">
+                        <label htmlFor="{{item.columnName}}">{{item.columnHeader}}</label>
+                        <input pInputText id="{{item.columnName}}" type="text" class="w-full" [(ngModel)]="item.value"/>
+                    </div>
+                </div>
+
+                <!-- select -->
+                <div *ngSwitchCase="3">
+                    <div class="p-field">
+                        <label class="mb-2">{{item.columnHeader}}</label>
+                        <p-dropdown [options]="item.selectBoxData" [(ngModel)]="item.value" placeholder="Chọn giá trị"
+                            optionLabel="name"
+                            optionValue="id"
+                            class="w-full"
+                            [showClear]="true">
+                        </p-dropdown>
+                    </div>
+                </div>
+
+                <!-- select multiple -->
+                <div *ngSwitchCase="4">
+                    <div class="p-field">
+                        <label>{{item.columnHeader}}</label>
+                        <p-multiSelect [options]="item.selectBoxData" optionLabel="name" [(ngModel)]="item.value"
+                            display="chip">
+                        </p-multiSelect>
+                    </div>
+                </div>
+
+                <!-- datetime -->
+                <div *ngSwitchCase="5">
+                    <div class="p-field">
+                        <label for="{{item.columnName}}">{{item.columnHeader}}</label>
+                        <p-calendar showButtonBar="true" class="w-full" inputId="{{item.columnName}}" [(ngModel)]="item.value"></p-calendar>
+                    </div>
+                </div>
+
+                <div *ngSwitchCase="6">
+                    <div class="p-field-checkbox">
+                        <p-checkbox [(ngModel)]="item.value" binary="true"></p-checkbox>
+                        <label for="{{item.columnName}}">{{item.columnHeader}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 justify-content-end" style="display: flex;" >
+            <button pButton pRipple icon="pi pi-times" class="p-button-outlined p-button-danger mr-2" (click)="filterColumn()"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-outlined p-button-success" (click)="filterColumn()"></button>
+        </div>
+    </div>
+</div>

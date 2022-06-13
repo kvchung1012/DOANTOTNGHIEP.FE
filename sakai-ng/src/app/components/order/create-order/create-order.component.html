@@ -1,0 +1,141 @@
+<div class="grid">
+    <div class="col-12 md:col-8">
+        <div class="card">
+            <!-- thêm sản phẩm -->
+            <form [formGroup]="infoFormSearch">
+                <div class="grid">
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="categoryId">Chọn danh mục</label>
+                            <p-dropdown [options]="listCategory" formControlName="categoryId"
+                                placeholder="Chọn danh mục" optionLabel="name" optionValue="id" styleClass="w-full"
+                                (onChange)="onChangeCategory($event)" [showClear]="true">
+                            </p-dropdown>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="search">Tên sản phẩm</label>
+                            <input formControlName="search" (change)="onSearchProduct()" type="text"
+                                class="w-full p-invalid" pInputText />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <!-- thông tin sản phẩm đã chọn -->
+            <div>
+                <div class="grid">
+                    <div class="col-12 md:col-6 lg:col-4 xl:col-3" *ngFor="let item of listProduct">
+                        <div class="card p-3" (click)="addToCart(item)">
+                            <div style="border-radius: 12px;">
+                                <img [src]="getImagePath(item.image)" class="w-full"
+                                    style="height: 150px; object-fit: cover; border-radius: 12px;">
+                            </div>
+                            <div>
+                                <p class="text-center mt-1" style="font-weight: bold;">
+                                    {{item.name}}
+                                </p>
+
+                                <div [ngClass]="{'price-original' : caculatePriceDiscount(item)>0}">
+                                    <p class="text-center">{{item.price | currency: 'VND':'symbol':'1.0-2'}}</p>
+                                </div>
+
+                                <div class="price-sale text-center" *ngIf="caculatePriceDiscount(item)>0">
+                                    <b>
+                                        {{caculatePriceDiscount(item) | currency: 'VND':'symbol':'1.0-2'}}
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-4 grid">
+        <div class="col-12">
+            <div class="card">
+                <div>
+                    <h6>Thông tin hóa đơn</h6>
+                </div>
+
+                <!-- danh sách sản phẩm đã được chọn -->
+                <div>
+                    <div class="card flex p-2" *ngFor="let item of carts">
+                        <div>
+                            <img [src]="getImagePath(item.product.image)"
+                                style="width: 80px;height: 80px; object-fit: cover; border-radius: 12px;">
+                        </div>
+                        <div class="ml-2">
+                            <div>
+                                <p><b>{{item.product.name}}</b></p>
+                            </div>
+                            <div class="flex align-items-center">
+                                <div>
+                                    <button pButton pRipple type="button" (click)="subStock(item)" icon="pi pi-minus"
+                                        class="p-button-sm p-button-rounded p-button-text"></button>
+                                </div>
+                                <div class="flex align-items-center pl-1 pr-1">
+                                    <p>
+                                        <b>{{item.stock}}</b>
+                                    </p>
+                                </div>
+                                <div>
+                                    <button pButton pRipple type="button" icon="pi pi-plus" (click)="addStock(item)"
+                                        class="p-button-sm p-button-rounded p-button-text"></button>
+                                </div>
+
+                                <div>
+                                    {{(item.product.price - caculatePriceDiscount(item.product) * item.stock) | currency: 'VND':'symbol':'1.0-2' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-field mb-2">
+                    <label for="totalPrice">Tên tổng hóa đơn</label>
+                    <input id="totalPrice" [value]="getTotalCartMoney()" type="number" class="w-full p-invalid"
+                        pInputText readonly />
+                </div>
+
+                <div class="p-field mb-2">
+                    <label for="receivePrice">Tiền nhận</label>
+                    <input id="receivePrice" [(ngModel)]="createCart.receiveMoney" type="number" class="w-full p-invalid" pInputText />
+                </div>
+
+                <div class="p-field mb-2">
+                    <label for="changePrice">Tiền trả khách hàng</label>
+                    <input id="changePrice" [(ngModel)]="createCart.changeMoney" type="number" class="w-full p-invalid" pInputText />
+                </div>
+
+
+                <!-- thông tin khách hàng -->
+                <h6>Thông tin khách hàng</h6>
+                <div class="p-field mb-2">
+                    <label for="customerName">Tên khách hàng</label>
+                    <input id="customerName" [(ngModel)]="createCart.customerName" type="text" class="w-full p-invalid"
+                        pInputText />
+                </div>
+
+                <div class="p-field mb-2">
+                    <label for="customerPhone">Số điện thoại</label>
+                    <input id="customerPhone" [(ngModel)]="createCart.customerPhone" type="text" class="w-full p-invalid" pInputText />
+                </div>
+
+                <div class="p-field mb-2">
+                    <label for="customerEmail">Email</label>
+                    <input id="customerEmail" [(ngModel)]="createCart.customerEmail" type="text" class="w-full p-invalid" pInputText />
+                </div>
+
+                <div class="text-right">
+                    <button pButton pRipple label="Thanh toán" class="p-button-outlined p-button-info" (click)="createOrder()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

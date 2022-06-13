@@ -1,0 +1,42 @@
+<form [formGroup]="infoForm">
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6">
+            <div class="p-field mb-3">
+                <label for="username2">Mã nhà cung cấp</label>
+                <input formControlName="code" id="code" type="text" class="p-invalid" pInputText/>
+                <small id="code-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('code').errors?.required">
+                    Mã nhà cung cấp không được để trống.
+                </small>
+            </div>
+
+            <div class="p-field">
+                <label for="name">Tên nhà cung cấp</label>
+                <input formControlName="name" id="name" type="text" class="p-invalid" pInputText />
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('name').errors?.required">
+                    Tên nhà cung cấp không được để trống.
+                </small>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="p-field mb-3">
+                <label for="status">Trạng thái</label>
+                <p-dropdown [options]="listStatus"
+                    formControlName="status"
+                    placeholder="Chọn trạng thái"
+                    optionLabel="name"
+                    optionValue="id"
+                    [showClear]="true">
+                </p-dropdown>
+                <small id="status-help" class="p-error p-invalid" *ngIf="submited && (infoForm.get('status').errors?.min || infoForm.get('status').errors?.required)">
+                    Trạng thái nhà cung cấp không được để trống.
+                </small>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-content-end">
+        <button pButton pRipple type="button" label="Hủy bỏ" class="p-button-danger mr-1" (click)="close()"></button>
+        <button pButton pRipple type="button" label="Thêm mới" (click)="save()"></button>
+    </div>
+</form>

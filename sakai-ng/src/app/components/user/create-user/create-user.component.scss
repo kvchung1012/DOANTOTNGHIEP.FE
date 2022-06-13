@@ -1,0 +1,9 @@
+.list-position{
+    .position-item{
+        border-left: 4px solid #edf1f5;
+    }
+
+    .position-item.active{
+        border-left: 4px solid #609af8;
+    }
+}

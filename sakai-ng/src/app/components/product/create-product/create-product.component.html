@@ -1,0 +1,174 @@
+<div class="card">
+    <form [formGroup]="infoForm">
+        <div class="grid p-fluid">
+            <div class="col-12 md:col-9 grid">
+                <div class="col-12 md:col-6">
+                    <div class="p-field">
+                        <label for="username2">Mã sản phẩm</label>
+                        <input formControlName="code" id="code" type="text" class="p-invalid" pInputText />
+                        <small id="code-help" class="p-error p-invalid"
+                            *ngIf="submited && infoForm.get('code').errors?.required">
+                            Mã danh mục không được để trống.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <div class="p-field">
+                        <label for="name">Tên sản phẩm</label>
+                        <input formControlName="name" id="name" type="text" class="p-invalid" pInputText />
+                        <small id="name-help" class="p-error p-invalid"
+                            *ngIf="submited && infoForm.get('name').errors?.required">
+                            Tên danh mục không được để trống.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="p-field">
+                        <label for="description">Mô tả sản phẩm</label>
+                        <textarea formControlName="description" id="description" type="text" class="p-invalid"
+                            pInputText></textarea>
+                        <small id="name-help" class="p-error p-invalid"
+                            *ngIf="submited && infoForm.get('name').errors?.required">
+                            Tên danh mục không được để trống.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-12 md:col-6">
+                    <div class="p-field mb-3">
+                        <label for="status">Danh mục</label>
+                        <p-dropdown [options]="listCategory" formControlName="categoryId" placeholder="Chọn danh mục" optionLabel="name"
+                            optionValue="id" [showClear]="true">
+                        </p-dropdown>
+                        <small id="status-help" class="p-error p-invalid"
+                            *ngIf="submited && (infoForm.get('categoryId').errors?.min || infoForm.get('categoryId').errors?.required)">
+                              Danh mục không được để trống.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6 flex align-items-center justify-content-between">
+                    <div class="p-field-checkbox">
+                        <p-checkbox [(ngModel)]="product.isCombo" formControlName="isCombo" binary="true"></p-checkbox>
+                        <label for="binary">Sản phẩm combo?</label>
+                    </div>
+
+                    <div class="p-field-checkbox">
+                        <p-checkbox binary="true" formControlName="isTop"></p-checkbox>
+                        <label for="binary">Sản phẩm nổi bật</label>
+                    </div>
+                </div>
+
+                <div *ngIf="product.isCombo" class="col-12 md:col-6">
+                    <div class="p-field mb-3">
+                        <label for="status">Chọn combo</label>
+                        <p-multiSelect formControlName="productCombo"
+                            [(ngModel)]="productCombos"
+                            [options]="listCombo"
+                            [showToggleAll]="false" optionLabel="name"
+                            optionValue="id"
+                            [virtualScroll]="true" [filter]="true"
+                            [itemSize]="34" class="multiselect-custom-virtual-scroll">
+                            <ng-template let-country pTemplate="item">
+                                <div class="country-item">
+                                    <div>{{country.name}}</div>
+                                </div>
+                            </ng-template>
+                        </p-multiSelect>
+                        <small id="status-help" class="p-error p-invalid"
+                            *ngIf="submited && product.isCombo && productCombos.length == 0">
+                            Combo không được để trống.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-12 md:col-6">
+                    <div class="p-field mb-3">
+                        <label for="status">Trạng thái danh mục</label>
+                        <p-dropdown formControlName="status" [options]="listStatus" placeholder="Chọn trạng thái" optionLabel="name" optionValue="id" [showClear]="true">
+                        </p-dropdown>
+                        <small id="status-help" class="p-error p-invalid"
+                            *ngIf="submited && (infoForm.get('status').errors?.min || infoForm.get('status').errors?.required)">
+                            Trạng thái danh mục không được để trống.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-3">
+                <label>Ảnh sản phẩm</label>
+                <div class="p-field mb-3 w-full">
+                    <img [src]="getImagePath(product.image)" class="w-full" style="object-fit: contain;" >
+                </div>
+                <div class="">
+                    <button pButton pRipple type="button" icon="pi pi-cloud-upload" label="Tải ảnh lên" (click)="fileUpload.click()"></button>
+                    <input #fileUpload  type="file" hidden (change)="uploadImage($event)" accept="image/gif, image/jpeg, image/png"/>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="col-12">
+        <div class="mb-1 flex justify-content-between align-items-end">
+            <h6>Thêm mới giá cho sản phẩm</h6>
+            <button pButton pRipple icon="pi pi-plus" class="p-button-outlined p-button-info" (click)="addRowProductPrice()"></button>
+        </div>
+        <p-table [value]="product.productPrice" dataKey="id" editMode="row" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+                    <th>Giá tiền</th>
+                    <th style="width:8rem"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-productPrice let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="productPrice">
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar inputId="basic" [(ngModel)]="productPrice.startTime" appendTo="body"></p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{productPrice.startTime?.toISOString()}}
+                                <!-- {{productPrice.startTime}} -->
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar inputId="basic" [(ngModel)]="productPrice.endTime" appendTo="body"></p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{productPrice.endTime?.toISOString()}}
+                                <!-- {{productPrice.endTime}} -->
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" [(ngModel)]="productPrice.price">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{productPrice.price | currency: 'VND'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td style="text-align:center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(productPrice)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-times" (click)="onDeletePrice(ri)" class="p-button-rounded p-button-danger p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(productPrice)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(productPrice, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div class="flex justify-content-end">
+        <button pButton pRipple type="button" [label]="id==0?'Thêm mới':'Cập nhât'" class="p-button-info" (click)="save()"></button>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="grid">
+    <div class="col-12 md:col-4">
+        <div class="card scroll-permission">
+            <div class="layout-menu-container">
+                <div class="role-header mb-2 ml-2">
+                    <div>
+                        <h6 class="m-0">Danh sách các quyền</h6>
+                    </div>
+                    <button pButton pRipple icon="pi pi-plus" class="p-button-text" (click)="createRole()"></button>
+                </div>
+                <ul class="layout-menu">
+                    <li class="role-item" [ngClass]="{'active': (item.id == roleCurrent)}" *ngFor="let item of listRole" (click)="chooseRole(item)">
+                       <span>
+                            {{item.name}}
+                       </span>
+
+                       <i class="pi pi-pencil" (click)="createRole(item)"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-8">
+        <!-- <div class="card">
+            <div *ngFor="let item of listPermission">
+                <div class="mb-2">
+                    <p-triStateCheckbox [(ngModel)]="item.checked" label ="{{item.name}}"></p-triStateCheckbox>
+                    <div *ngIf="item.checked || item.value == false" class="mt-2" style="margin-left:2.5rem;">
+                        <div *ngFor="let sub of item.childs" class="mb-2">
+                            <p-checkbox [(ngModel)]="sub.checked" binary="true" label = "{{item.name}}"></p-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <div class="card">
+            <p-tree [value]="nodes" [filter]="true">
+                <ng-template let-node pTemplate="parent">
+                    <p-triStateCheckbox
+                        [(ngModel)]="node.data.checked"
+                        label ="{{node.label}}"
+                        (onChange)="checkAllChild(node)">
+                    </p-triStateCheckbox>
+                </ng-template>
+
+                <ng-template let-node pTemplate="child">
+                    <p-checkbox [(ngModel)]="node.data.checked" binary="true" label ="{{node.label}}" (onChange)="checkItemPermission(node)"></p-checkbox>
+                </ng-template>
+            </p-tree>
+
+            <!-- <p-tree [value]="nodes" selectionMode="checkbox" [(selection)]="nodeSelected">
+
+            </p-tree>-->
+
+            <div class="flex justify-content-end mt-2">
+                <button pButton pRipple label="Cập nhật" (click)="savePermission()"></button>
+            </div>
+        </div>
+
+    </div>
+</div>

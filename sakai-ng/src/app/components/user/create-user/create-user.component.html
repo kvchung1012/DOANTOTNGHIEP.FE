@@ -1,0 +1,134 @@
+<div class="grid">
+    <div class="col-12 md:col-8">
+        <div class="card">
+            <div>
+                <h6>Thông tin người dùng</h6>
+            </div>
+            <form [formGroup]="infoForm">
+            <div class="grid">
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="userName">Username</label>
+                            <input formControlName="userName" type="text" class="p-invalid w-full" pInputText />
+                            <small id="userName-help" class="p-error p-invalid"
+                                *ngIf="submited && infoForm.get('userName').errors?.required">
+                                Username không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="username2">Họ và tên</label>
+                            <input formControlName="fullName" type="text" class="p-invalid w-full" pInputText />
+                            <small id="fullName-help" class="p-error p-invalid"
+                                *ngIf="submited && infoForm.get('fullName').errors?.required">
+                                Họ và tên không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="email">Email</label>
+                            <input formControlName="email" type="text" class="p-invalid w-full" pInputText />
+                            <small id="email-help" class="p-error p-invalid"
+                                *ngIf="submited && infoForm.get('email').errors?.required">
+                                Email không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="phone">Số điện thoại</label>
+                            <input formControlName="phone" type="number" class="p-invalid w-full" pInputText />
+                            <small id="phone-help" class="p-error p-invalid"
+                                *ngIf="submited && infoForm.get('phone').errors?.required">
+                                Số điện thoại không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- sinh nhật -->
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="birthday">Ngày sinh</label>
+                            <p-calendar formControlName="birthday" appendTo="body" styleClass="w-full" dateFormat="dd/mm/yy"></p-calendar>
+                            <small id="birthday-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('birthday').errors?.required">
+                                Ngày sinh không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="identity">Căn cước công dân</label>
+                            <input formControlName="identity" type="number" class="p-invalid w-full" pInputText />
+                            <small id="identity-help" class="p-error p-invalid"
+                                *ngIf="submited && infoForm.get('identity').errors?.required">
+                                Căn cước công dân không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="p-field">
+                            <label for="address">Địa chỉ</label>
+                            <input formControlName="address" type="text" class="p-invalid w-full" pInputText />
+                            <small id="address-help" class="p-error p-invalid"
+                                *ngIf="submited && infoForm.get('address').errors?.required">
+                                Địa chỉ không được để trống.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field-checkbox">
+                            <p-checkbox formControlName="isActive" binary="true" styleClass="w-full"></p-checkbox>
+                            <label for="binary">Hoạt động?</label>
+                        </div>
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                        <div class="p-field">
+                            <label for="status">Trạng thái danh mục</label>
+                            <p-dropdown formControlName="status"
+                                [options]="listStatus"
+                                placeholder="Chọn trạng thái"
+                                optionLabel="name"
+                                optionValue="id"
+                                styleClass="w-full"
+                                [showClear]="true">
+                            </p-dropdown>
+                            <small id="status-help" class="p-error p-invalid"
+                                *ngIf="submited && (infoForm.get('status').errors?.min || infoForm.get('status').errors?.required)">
+                                Trạng thái danh mục không được để trống.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="flex justify-content-end">
+                <button pButton pRipple type="button" [label]="user.id==0?'Thêm mới':'Cập nhât'" class="p-button-info" (click)="save()"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 md:col-4">
+        <div class="card">
+            <div class="time-line-header">
+                <h6>Quá trình làm việc</h6>
+                <div class="list-position">
+                    <div class="card position-item" [ngClass]="{'active':checkCurrentPosition(item)}" *ngFor="let item of positions">
+                        <p><b>{{item.name}}</b></p>
+                        <div>
+                            <span>{{item.startTime | date : 'dd/MM/yyyy'}} - {{item.endTime == null ? 'Hiện tại' : (item.endTime | date : 'dd/MM/yyyy')}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,162 @@
+<div>
+    <div class="grid">
+        <div class="col-12 md:col-7">
+            <div class="card">
+                <div class="mb-4 flex justify-content-between align-items-end">
+                    <h6>Thông tin hóa đơn nhập</h6>
+                    <button pButton pRipple icon="pi pi-plus" label="Thêm nguyên liệu" class="p-button-outlined p-button-info"
+                        (click)="showSideBar()"></button>
+                </div>
+                <form [formGroup]="infoForm">
+                    <div class="grid">
+                        <div class="col-12 md:col-6">
+                            <div class="p-field">
+                                <label for="description">Mô tả</label>
+                                <input formControlName="description" type="text"
+                                    class="w-full p-invalid" pInputText />
+                                    <small id="name-help" class="p-error p-invalid"
+                                        *ngIf="submited && infoForm.get('description').errors?.required">
+                                        Tên danh mục không được để trống.
+                                    </small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <div class="p-field">
+                                <label for="supplierId">Chọn nhà cung cấp</label>
+                                <p-dropdown formControlName="supplierId" [options]="listSupplier"
+                                    placeholder="Chọn nhà cung cấp" optionLabel="name" optionValue="id" styleClass="w-full"
+                                    [showClear]="true">
+                                </p-dropdown>
+
+                                <small id="name-help" class="p-error p-invalid"
+                                        *ngIf="submited && infoForm.get('supplierId').errors?.required">
+                                        Nhà cung cấp không được để trống.
+                                </small>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="p-field">
+                                <label for="note">Ghi chú</label>
+                                <textarea formControlName="note" [rows]="5"  type="text" class="p-invalid w-full"
+                                pInputText></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <div class="p-field">
+                                <label for="description">Tổng hóa đơn</label>
+                                <input type="text" [value]="getTotalPrice()"
+                                    class="w-full p-invalid" pInputText disabled />
+                            </div>
+                        </div>
+
+                        <div class="col-12 md:col-6">
+                            <div class="p-field mb-3">
+                                <label for="status">Trạng thái danh mục</label>
+                                <p-dropdown formControlName="status" [options]="listStatus"
+                                    placeholder="Chọn trạng thái"
+                                    optionLabel="name" optionValue="id"
+                                    [showClear]="true" styleClass="w-full">
+                                </p-dropdown>
+                                <small id="status-help" class="p-error p-invalid"
+                                    *ngIf="submited && (infoForm.get('status').errors?.min || infoForm.get('status').errors?.required)">
+                                    Trạng thái danh mục không được để trống.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-right">
+                            <button pButton pRipple label="Thêm mới" class="p-button-outlined p-button-info"
+                                    (click)="save()"></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- selected list -->
+        <div class="col-12 md:col-5">
+            <div class="card">
+                <div class="grid list-material">
+                    <div class="col-12 md:col-6" *ngFor="let item of materialSelected">
+                        <div class="card p-3 material-select flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="m-0"><b>{{item.material.code}} - {{item.material.name}}</b></span>
+                                    <p class="m-0" style="font-size: 0.8rem;">{{item.stock}} {{item.material.unitName}}</p>
+                                    <div style="font-size: 0.8rem;">
+                                        <span>{{item.price * item.stock | currency: 'VND':'symbol':'1.0-2'}}</span>
+                                    </div>
+
+                                    <div class="mt-1">
+                                        <div style="font-size: 0.8rem;">
+                                            <span>{{item.startTime | date : 'dd/MM/yyyy'}} - {{item.endTime == null ? 'Hiện tại' : (item.expriedTime | date : 'dd/MM/yyyy')}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div>
+                                        <button pButton pRipple type="button" icon="pi pi-plus" (click)="addStock(item)"
+                                            class="p-button-sm p-button-rounded p-button-text"></button>
+                                    </div>
+
+                                    <div>
+                                        <button pButton pRipple type="button" (click)="subStock(item)" icon="pi pi-minus"
+                                            class="p-button-sm p-button-rounded p-button-text"></button>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- show hide shibar -->
+<p-sidebar [(visible)]="isShowSidebar" position="right" [baseZIndex]="10000" [style]="{width:'30em',height:'100%'}">
+    <ng-template pTemplate="content">
+        <div class="grid list-material" (scroll)="scrollMaterial($event)">
+            <div class="col-12" *ngFor="let item of listMaterials">
+                <div class="card" [ngClass]="{'material-select': checkIsMaterialExists(item)}" (click)="chooseMaterial(item)">
+                    <p class="m-0"><b>{{item.code}}</b></p>
+                    <p class="m-0"><b>{{item.name}}</b></p>
+                    <p>{{item.unitName}}</p>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-sidebar>
+
+<!-- config price and stock -->
+<p-dialog header="Header" [(visible)]="isSelectMaterial" [style]="{width: '40vw'}" [baseZIndex]="10000">
+    <div class="grid">
+        <div class="col-12 md:col-6 p-field">
+            <label for="name">Số lượng</label>
+            <input [(ngModel)]="currentMaterial.stock" type="number" class="w-full" pInputText />
+        </div>
+
+        <div class="col-12 md:col-6 p-field mb-3">
+            <label for="username2">Đơn giá</label>
+            <input [(ngModel)]="currentMaterial.price" type="number" class="w-full" pInputText/>
+        </div>
+
+        <div class="col-12 md:col-6 p-field mb-3">
+            <label for="username2">Ngày sản xuất</label>
+            <p-calendar inputId="basic" [(ngModel)]="currentMaterial.startTime" class="w-full" appendTo="body" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+
+        <div class="col-12 md:col-6 p-field mb-3">
+            <label for="username2">Hạn sử dụng</label>
+            <p-calendar inputId="basic" [(ngModel)]="currentMaterial.expriedTime" class="w-full" appendTo="body" dateFormat="dd/mm/yy"></p-calendar>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="isSelectMaterial=false" styleClass="p-button-text" label="No"></p-button>
+        <p-button icon="pi pi-check" (click)="pushMaterial()" label="Yes" ></p-button>
+    </ng-template>
+</p-dialog>

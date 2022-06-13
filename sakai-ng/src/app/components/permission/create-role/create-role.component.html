@@ -1,0 +1,32 @@
+<form [formGroup]="infoForm">
+    <div class="grid p-fluid">
+        <div class="col-12 md:col-6">
+            <div class="p-field mb-3">
+                <label for="name">Tên quyền</label>
+                <input formControlName="name" id="name" type="text" class="p-invalid" pInputText/>
+                <small id="name-help" class="p-error p-invalid" *ngIf="submited && infoForm.get('name').errors?.required">
+                    Tên quyền không được để trống.
+                </small>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="p-field-checkbox">
+                <p-checkbox binary="true" formControlName="isDefault"></p-checkbox>
+                <label for="binary">Quyền mặc định</label>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+            <div class="p-field">
+                <label for="name">Mô tả quyền</label>
+                <input formControlName="description" id="description" type="text" class="p-invalid" pInputText />
+            </div>
+        </div>
+    </div>
+
+    <div class="flex justify-content-end">
+        <button pButton pRipple type="button" label="Hủy bỏ" class="p-button-danger mr-1" (click)="close()"></button>
+        <button pButton pRipple type="button" [label]="roleDto==null?'Thêm mới':'Cập nhật'" (click)="save()"></button>
+    </div>
+</form>

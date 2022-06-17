@@ -25,6 +25,25 @@ export class CartService {
         return this.carts.reduce((partialSum, a) => partialSum + a.stock, 0);
     }
 
+    getTotalPriceCart(){
+        return this.carts.reduce((partialSum, a) => partialSum + this.caculatePriceDiscount(a.product) * a.stock, 0);
+    }
+
+    /**
+     *
+     * @param product
+     * @returns trả về số tiền được giảm giá của sản phẩm
+     */
+     caculatePriceDiscount(product:ProductDto){
+        if(product.value && product.value > 0 && product.price > 0){
+          if(product.saleType){
+              return product.price - product.value;
+          }
+          return product.price - product.price*(product.value/100)
+        }
+        return product.price;
+    }
+
     /**
      * thêm mới sản phẩm
      * @param product

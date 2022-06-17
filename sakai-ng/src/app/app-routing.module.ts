@@ -29,9 +29,9 @@ import { SalecodeComponent } from './components/salecode/salecode.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            {path: 'trang-chu', loadChildren: () => import('./app-client/app-client.module').then(m => m.AppClientModule)},
+            {path: '', loadChildren: () => import('./app-client/app-client.module').then(m => m.AppClientModule)},
             {
-                path: '', component: AppMainComponent,
+                path: 'admin', component: AppMainComponent,
                 children: [
                     {path: '', component: DashboardComponent},
                     {path: 'uikit/menu', loadChildren: () => import('./components/menus/menus.module').then(m => m.MenusModule)},

@@ -105,14 +105,14 @@ export class ProductComponent implements OnInit {
    * Hàm tạo
    */
   create(){
-    this._router.navigate(['/create-product'])
+    this._router.navigate(['/admin/create-product'])
   }
 
   /**
    * Hàm sửa
    */
   edit(item){
-    this._router.navigate(['/update-product',item.id])
+    this._router.navigate(['/admin/update-product',item.id])
   }
 
   /**

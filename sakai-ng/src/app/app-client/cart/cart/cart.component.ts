@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from 'src/app/service/cart/cart.service';
 import { ProductInCart } from 'src/app/service/order/model/orderModel';
 import { ProductDto } from 'src/app/service/product/model/productModel';
@@ -11,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CartComponent implements OnInit {
 
-    constructor(public _cartService: CartService) { }
+    constructor(public _cartService: CartService, public _router: Router) { }
 
     ngOnInit(): void {
     }
@@ -49,6 +50,10 @@ export class CartComponent implements OnInit {
         if(!path)
             return '../../../../assets/demo/no-image.png';
         return environment.baseUrl + path;
+    }
+
+    goCartDetail(){
+        this._router.navigate(['gio-hang'])
     }
 
 }

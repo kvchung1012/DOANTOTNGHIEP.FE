@@ -102,7 +102,7 @@ export class ExportInvoiceComponent implements OnInit {
   * Hàm tạo
   */
  create(){
-   this._router.navigate(['/warehouse'])
+   this._router.navigate(['/admin/warehouse'])
  }
 
  /**

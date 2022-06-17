@@ -49,7 +49,7 @@ export class LoginClientComponent implements OnInit {
       }).subscribe(res=>{
           localStorage.setItem('token',res.accessToken);
           this.messageService.add({severity:'success', summary: 'Thành công', detail: 'Chào mừng bạn đến với coffee house'});
-          this._route.navigate(['/trang-chu'])
+          this._route.navigate(['/'])
       },err=>{
           this.messageService.add({severity:'warning', summary: 'Thất bại', detail: 'Tài khoản và mật khẩu không chính xác'});
       })

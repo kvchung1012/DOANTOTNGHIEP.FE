@@ -23,11 +23,11 @@ export class LayoutComponent implements OnInit {
     }
 
     login(){
-        this._router.navigate(['trang-chu/dang-nhap'])
+        this._router.navigate(['/dang-nhap'])
     }
 
     logout(){
         localStorage.removeItem('token');
-        this._router.navigate(['trang-chu/dang-nhap'])
+        this._router.navigate(['/dang-nhap'])
     }
 }

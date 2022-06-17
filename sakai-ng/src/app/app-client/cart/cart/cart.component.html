@@ -34,4 +34,19 @@
             </div>
         </div>
     </div>
+
+    <hr>
+    <div class="flex justify-content-between">
+        <div>
+            Tổng hóa đơn:
+        </div>
+
+        <div>
+            <strong>{{_cartService.getTotalPriceCart() | currency: 'VND':'symbol':'1.0-2'}}</strong>
+        </div>
+    </div>
+
+    <div class="mt-3 flex justify-content-end">
+        <button (click)="goCartDetail()" pButton pRipple type="button" label="Đặt hàng" class="p-button-outlined"></button>
+    </div>
 </div>

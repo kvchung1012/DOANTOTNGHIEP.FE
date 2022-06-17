@@ -102,14 +102,14 @@ export class OrderComponent implements OnInit {
     * Hàm tạo
     */
    create(){
-     this._router.navigate(['/create-order'])
+     this._router.navigate(['/admin/create-order'])
    }
 
    /**
     * Hàm sửa
     */
    edit(item){
-     this._router.navigate(['/update-product',item.id])
+     this._router.navigate(['/admin/update-product',item.id])
    }
 
    viewDetail(item){

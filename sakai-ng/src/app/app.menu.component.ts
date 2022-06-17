@@ -30,35 +30,35 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Home',
                 items:[
-                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/']}
+                    {label: 'Dashboard',icon: 'pi pi-fw pi-home', routerLink: ['/admin']}
                 ]
             },
             {
                 label: 'Cửa hàng',
                 items:[
-                    {label: 'Danh mục sản phẩm',icon: 'pi pi-tags', routerLink: ['/category']},
-                    {label: 'Sản phẩm',icon: 'pi pi-th-large', routerLink: ['/product']},
-                    {label: 'Chương trình khuyến mãi',icon: 'pi pi-heart', routerLink: ['/discount']},
-                    {label: 'Mã khuyến mãi',icon: 'pi pi-heart', routerLink: ['/salecode']},
-                    {label: 'Quản lý chất liệu',icon: 'pi pi-prime', routerLink: ['/material']},
-                    {label: 'Quản lý nhà cung cấp',icon: 'pi pi-id-card', routerLink: ['/supplier']},
-                    {label: 'Quản lý đơn hàng',icon: 'pi pi-shopping-cart', routerLink: ['/order']},
+                    {label: 'Danh mục sản phẩm',icon: 'pi pi-tags', routerLink: ['category']},
+                    {label: 'Sản phẩm',icon: 'pi pi-th-large', routerLink: ['product']},
+                    {label: 'Chương trình khuyến mãi',icon: 'pi pi-heart', routerLink: ['discount']},
+                    {label: 'Mã khuyến mãi',icon: 'pi pi-heart', routerLink: ['salecode']},
+                    {label: 'Quản lý chất liệu',icon: 'pi pi-prime', routerLink: ['material']},
+                    {label: 'Quản lý nhà cung cấp',icon: 'pi pi-id-card', routerLink: ['supplier']},
+                    {label: 'Quản lý đơn hàng',icon: 'pi pi-shopping-cart', routerLink: ['order']},
                 ]
             },
             {
                 label: 'Quản lý kho',
                 items:[
-                    {label: 'Nhập hàng',icon: 'pi pi-id-card', routerLink: ['/import-invoice']},
-                    {label: 'Xuất hàng',icon: 'pi pi-tags', routerLink: ['/export-invoice']},
-                    {label: 'Kho hàng',icon: 'pi pi-desktop', routerLink: ['/warehouse']},
+                    {label: 'Nhập hàng',icon: 'pi pi-id-card', routerLink: ['import-invoice']},
+                    {label: 'Xuất hàng',icon: 'pi pi-tags', routerLink: ['export-invoice']},
+                    {label: 'Kho hàng',icon: 'pi pi-desktop', routerLink: ['warehouse']},
                 ]
             },
             {
                 label: 'Cài đặt',
                 items:[
-                    {label: 'Tài khoản',icon: 'pi pi-tags', routerLink: ['/user-manager']},
-                    {label: 'Chức vụ',icon: 'pi pi-sitemap', routerLink: ['/position']},
-                    {label: 'Cài đặt quyền',icon: 'pi pi-tags', routerLink: ['/permission-setting']},
+                    {label: 'Tài khoản',icon: 'pi pi-tags', routerLink: ['user-manager']},
+                    {label: 'Chức vụ',icon: 'pi pi-sitemap', routerLink: ['position']},
+                    {label: 'Cài đặt quyền',icon: 'pi pi-tags', routerLink: ['permission-setting']},
                 ]
             },
             {
@@ -66,7 +66,7 @@ export class AppMenuComponent implements OnInit {
                 items:[
                     {
                         label: 'Trang chủ',
-                        routerLink: ['/trang-chu'],
+                        routerLink: ['/'],
                     }
                 ]
             }

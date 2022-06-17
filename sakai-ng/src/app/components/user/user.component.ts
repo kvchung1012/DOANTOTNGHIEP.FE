@@ -101,14 +101,14 @@ export class UserComponent implements OnInit {
    * Hàm tạo
    */
   create(){
-    this._router.navigate(['/user-manager/create-user'])
+    this._router.navigate(['/admin/user-manager/create-user'])
   }
 
   /**
    * Hàm sửa
    */
   edit(item){
-    this._router.navigate(['/user-manager/update-user',item.id])
+    this._router.navigate(['/admin/user-manager/update-user',item.id])
   }
 
   /**

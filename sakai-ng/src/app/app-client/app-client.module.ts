@@ -13,6 +13,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { PasswordModule } from 'primeng/password';
 import { FormsModule } from '@angular/forms';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { CartDetailComponent } from './cart-detail/cart-detail.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     ListProductComponent,
     CartComponent,
     LoginClientComponent,
+    CartDetailComponent,
   ],
   imports: [
     CommonModule,

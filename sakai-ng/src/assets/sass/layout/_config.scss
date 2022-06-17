@@ -109,14 +109,14 @@
 
 /* width */
 ::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    border-radius: 3px;
+    width: 5px;
+    height: 5px;
+    border-radius: 10px;
   }
 
   /* Track */
   ::-webkit-scrollbar-track {
-    background: #fff;
+    background: transparent;
   }
 
   /* Handle */

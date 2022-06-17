@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
     years = [];
     year = 0;
-    month = [1,2,3,4,5,6,7,8,9,10]
+    month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     // default
     subscription: Subscription;
 
@@ -61,8 +61,8 @@ export class DashboardComponent implements OnInit {
     initData() {
         var currentTime = new Date();
         //set up year
-        for (let index = currentTime.getFullYear()-10; index <= currentTime.getFullYear()+10; index++) {
-           this.years.push(index);
+        for (let index = currentTime.getFullYear() - 10; index <= currentTime.getFullYear() + 10; index++) {
+            this.years.push(index);
         }
 
 
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
         })
 
         this.getRevueneByYear(currentTime.getFullYear());
-        this.getRevueneInMonth(currentTime.getFullYear(),currentTime.getMonth())
+        this.getRevueneInMonth(currentTime.getFullYear(), currentTime.getMonth())
     }
 
     getRevueneByYear(year: number) {
@@ -97,15 +97,10 @@ export class DashboardComponent implements OnInit {
     }
 
     getRevueneInMonth(year, month) {
-        debugger
         this._dashboardService.getRevueneByMonth(year, month).subscribe(res => {
             // config ngày
-            var dayLength = 31;
-            var arrDay = [];
-            for (let i = 0; i < dayLength; i++) {
-                arrDay.push(i + 1)
-
-            }
+            var arrDay = this.getDaysInMonth(month, year);
+            console.log(arrDay);
             this.chartDataMonth = {
                 labels: arrDay,
                 datasets: [
@@ -122,19 +117,30 @@ export class DashboardComponent implements OnInit {
         })
     }
 
+    getDaysInMonth(month, year) {
+        var date = new Date(year, month, 1);
+        var days = [];
+        while (date.getMonth() === month) {
+            debugger
+            days.push(new Date(date).getDate());
+            date.setDate(date.getDate() + 1);
+        }
+        return days;
+    }
+
     getImagePath(path: string) {
         if (!path)
             return '../../../../assets/demo/no-image.png';
         return environment.baseUrl + path;
     }
 
-    selectYear(event){
+    selectYear(event) {
         this.year = event.value;
         this.getRevueneByYear(event.value)
     }
 
-    selectMonth(event){
-        this.getRevueneInMonth(this.year,event.value)
+    selectMonth(event) {
+        this.getRevueneInMonth(this.year, event.value)
     }
 
     updateChartOptions() {

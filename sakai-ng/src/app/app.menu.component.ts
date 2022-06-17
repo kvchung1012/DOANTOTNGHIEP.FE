@@ -39,6 +39,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Danh mục sản phẩm',icon: 'pi pi-tags', routerLink: ['/category']},
                     {label: 'Sản phẩm',icon: 'pi pi-th-large', routerLink: ['/product']},
                     {label: 'Chương trình khuyến mãi',icon: 'pi pi-heart', routerLink: ['/discount']},
+                    {label: 'Mã khuyến mãi',icon: 'pi pi-heart', routerLink: ['/salecode']},
                     {label: 'Quản lý chất liệu',icon: 'pi pi-prime', routerLink: ['/material']},
                     {label: 'Quản lý nhà cung cấp',icon: 'pi pi-id-card', routerLink: ['/supplier']},
                     {label: 'Quản lý đơn hàng',icon: 'pi pi-shopping-cart', routerLink: ['/order']},
@@ -58,6 +59,15 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Tài khoản',icon: 'pi pi-tags', routerLink: ['/user-manager']},
                     {label: 'Chức vụ',icon: 'pi pi-sitemap', routerLink: ['/position']},
                     {label: 'Cài đặt quyền',icon: 'pi pi-tags', routerLink: ['/permission-setting']},
+                ]
+            },
+            {
+                label: 'Trang chủ',
+                items:[
+                    {
+                        label: 'Trang chủ',
+                        routerLink: ['/trang-chu'],
+                    }
                 ]
             }
         ];

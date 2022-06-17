@@ -25,9 +25,11 @@ import { ImportInvoiceComponent } from './components/import-invoice/import-invoi
 import { CreateImportInvoiceComponent } from './components/import-invoice/create-import-invoice/create-import-invoice.component';
 import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { ExportInvoiceComponent } from './components/warehouse/export-invoice/export-invoice.component';
+import { SalecodeComponent } from './components/salecode/salecode.component';
 @NgModule({
     imports: [
         RouterModule.forRoot([
+            {path: 'trang-chu', loadChildren: () => import('./app-client/app-client.module').then(m => m.AppClientModule)},
             {
                 path: '', component: AppMainComponent,
                 children: [
@@ -37,6 +39,7 @@ import { ExportInvoiceComponent } from './components/warehouse/export-invoice/ex
                     {path: 'pages/empty', component: EmptyComponent},
                     {path: 'category', component: CategoryComponent},
                     {path: 'discount', component: DiscountComponent},
+                    {path: 'salecode', component: SalecodeComponent},
                     {path: 'material', component: MaterialComponent},
                     {path: 'supplier', component: SupplierComponent},
 
@@ -66,6 +69,7 @@ import { ExportInvoiceComponent } from './components/warehouse/export-invoice/ex
                     {path:'user-manager/update-user/:id',component:CreateUserComponent}
                 ],
             },
+
             {path:'pages/landing', component: LoginComponent},
             {path:'pages/login', component: LoginComponent},
             {path:'pages/error', component: ErrorComponent},

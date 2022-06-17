@@ -152,6 +152,9 @@ import { ImportInvoiceComponent } from './components/import-invoice/import-invoi
 import { CreateImportInvoiceComponent } from './components/import-invoice/create-import-invoice/create-import-invoice.component';
 import { WarehouseComponent } from './components/warehouse/warehouse.component';
 import { ExportInvoiceComponent } from './components/warehouse/export-invoice/export-invoice.component';
+import { SalecodeComponent } from './components/salecode/salecode.component';
+import { CreateSalecodeComponent } from './components/salecode/create-salecode/create-salecode.component';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 
 export function initializeApp(appInitService: AppInitService) {
@@ -294,12 +297,15 @@ export function initializeApp(appInitService: AppInitService) {
         ImportInvoiceComponent,
         CreateImportInvoiceComponent,
         WarehouseComponent,
-        ExportInvoiceComponent
+        ExportInvoiceComponent,
+        SalecodeComponent,
+        CreateSalecodeComponent
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppInitService], multi: true},
         { provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },
+        { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService,
         CountryService, CustomerService, EventService, IconService, NodeService,
         PhotoService, ProductService, MenuService, ConfigService, TableColumnService,
         CategoryService,ConfirmationService, MessageService, DialogService,

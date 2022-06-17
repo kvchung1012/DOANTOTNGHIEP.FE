@@ -1,0 +1,37 @@
+<div>
+    <div class="card flex p-2" *ngFor="let item of _cartService.getCart()">
+        <div>
+            <img [src]="getImagePath(item.product.image)"
+                style="width: 80px;height: 80px; object-fit: cover; border-radius: 12px;">
+        </div>
+        <div class="ml-2">
+            <div>
+                <p><b>{{item.product.name}}</b></p>
+            </div>
+            <div class="flex align-items-center">
+                <div>
+                    <button pButton pRipple type="button" (click)="subStock(item)" icon="pi pi-minus"
+                        class="p-button-sm p-button-rounded p-button-text"></button>
+                </div>
+                <div class="flex align-items-center pl-1 pr-1">
+                    <p>
+                        <b>{{item.stock}}</b>
+                    </p>
+                </div>
+                <div>
+                    <button pButton pRipple type="button" icon="pi pi-plus" (click)="addStock(item)"
+                        class="p-button-sm p-button-rounded p-button-text"></button>
+                </div>
+
+                <div>
+                    <div *ngIf="caculatePriceDiscount(item.product) == item.product.price">
+                        {{item.product.price * item.stock | currency: 'VND':'symbol':'1.0-2' }}
+                    </div>
+                    <div *ngIf="caculatePriceDiscount(item.product) != item.product.price">
+                        {{(caculatePriceDiscount(item.product) * item.stock) | currency: 'VND':'symbol':'1.0-2' }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

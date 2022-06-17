@@ -161,7 +161,7 @@ export class CreateOrderComponent implements OnInit {
             return 0;
         let sum = 0;
         this.carts.forEach(x => {
-            sum += (x.product.price - this.caculatePriceDiscount(x.product))*x.stock;
+            sum += (this.caculatePriceDiscount(x.product))*x.stock;
         });
         this.createCart.totalMoney = sum;
         return sum;
@@ -172,16 +172,15 @@ export class CreateOrderComponent implements OnInit {
      * @param product
      * @returns trả về số tiền được giảm giá của sản phẩm
      */
-    caculatePriceDiscount(product:ProductDto){
-        if(product.value>0){
+     caculatePriceDiscount(product:ProductDto){
+        if(product.value && product.value > 0 && product.price > 0){
           if(product.saleType){
               return product.price - product.value;
           }
           return product.price - product.price*(product.value/100)
         }
-        return 0;
+        return product.price;
     }
-
 
     /**
      *

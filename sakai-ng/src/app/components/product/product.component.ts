@@ -161,15 +161,15 @@ export class ProductComponent implements OnInit {
   }
 
 // tiện ích
-  caculatePriceDiscount(product:ProductDto){
-      if(product.value>0){
-        if(product.saleType){
-            return product.price - product.value;
-        }
-        return product.price - product.price*(product.value/100)
+caculatePriceDiscount(product:ProductDto){
+    if(product.value && product.value > 0 && product.price > 0){
+      if(product.saleType){
+          return product.price - product.value;
       }
-      return 0;
-  }
+      return product.price - product.price*(product.value/100)
+    }
+    return product.price;
+}
 
 
   getImagePath(path:string){

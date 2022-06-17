@@ -2,26 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { DiscountService } from 'src/app/service/discount/discount.service';
-import { CreateDiscountDto,
-
- } from 'src/app/service/discount/model/discountModel';
+import { CreateSaleCodeDto } from 'src/app/service/salecode/model/saleCodeDto';
+import { SalecodeService } from 'src/app/service/salecode/salecode.service';
 import { SelectBoxDataDto } from 'src/app/service/table/model/tableModel';
 import { TableColumnService } from 'src/app/service/table/table.service';
 
 @Component({
-    selector: 'app-create-discount',
-    templateUrl: './create-discount.component.html',
-    styleUrls: ['./create-discount.component.scss']
+  selector: 'app-create-salecode',
+  templateUrl: './create-salecode.component.html',
+  styleUrls: ['./create-salecode.component.scss']
 })
-export class CreateDiscountComponent implements OnInit {
+export class CreateSalecodeComponent implements OnInit {
 
     submited = false;
 
     listStatus: SelectBoxDataDto[];
-
-    listProduct: SelectBoxDataDto[];
-    listProductSelected: SelectBoxDataDto[];
 
     listSaleType = [{
         value: true,
@@ -32,7 +27,7 @@ export class CreateDiscountComponent implements OnInit {
         label: 'Giảm theo phần trăm'
     }
     ]
-    discount: CreateDiscountDto = {
+    salecode: CreateSaleCodeDto = {
         id: 0,
         code: '',
         name: '',
@@ -41,7 +36,9 @@ export class CreateDiscountComponent implements OnInit {
         endTime: null,
         saleType: null,
         value: 0,
-        productDiscount: []
+        minPrice : 0,
+        stock : 0,
+        stockByUser :0
     };
 
     infoForm: FormGroup;
@@ -50,16 +47,16 @@ export class CreateDiscountComponent implements OnInit {
         , public ref: DynamicDialogRef
         , public _fb: FormBuilder
         , private messageService: MessageService
-        , public _discountService: DiscountService
+        , public _saleCodeService: SalecodeService
     ) { }
 
     ngOnInit(): void {
         if (this.config.data != undefined) {
-            this.discount = this.config.data;
-            this._discountService.getDiscountById(this.config.data.id).subscribe(res => {
-                this.discount = res;
-                this.discount.startTime = new Date(res.startTime);
-                this.discount.endTime = res.endTime == null ? null : new Date(res.endTime);
+            this.salecode = this.config.data;
+            this._saleCodeService.getById(this.config.data.id).subscribe(res => {
+                this.salecode = res;
+                // this.salecode.startTime = new Date(res.startTime);
+                // this.salecode.endTime = res.endTime == null ? null : new Date(res.endTime);
             });
         }
         // call function only run one time
@@ -72,14 +69,16 @@ export class CreateDiscountComponent implements OnInit {
      */
     initFormBuilder() {
         this.infoForm = this._fb.group({
-            code: [this.discount.code, Validators.required],
-            name: [this.discount.name, Validators.required],
-            startTime: [new Date(this.discount.startTime), Validators.required],
-            endTime: [this.discount.endTime?new Date(this.discount.endTime):null],
-            saleType: [this.discount.saleType, Validators.required],
-            value: [this.discount.value, Validators.required],
-            status: [this.discount.status, [Validators.required, Validators.min(1)]],
-            productDiscount: [this.discount.productDiscount, [Validators.required]],
+            code: [this.salecode.code, Validators.required],
+            name: [this.salecode.name, Validators.required],
+            startTime: [new Date(this.salecode.startTime), Validators.required],
+            endTime: [this.salecode.endTime?new Date(this.salecode.startTime):null],
+            saleType: [this.salecode.saleType, Validators.required],
+            value: [this.salecode.value, Validators.required],
+            status: [this.salecode.status, [Validators.required, Validators.min(1)]],
+            minPrice : [this.salecode.minPrice, Validators.required],
+            stock : [this.salecode.stock, Validators.required],
+            stockByUser : [this.salecode.stockByUser, Validators.required]
         })
     }
 
@@ -90,10 +89,6 @@ export class CreateDiscountComponent implements OnInit {
     getListMasterData(id: number) {
         this._tableService.getMasterDataByGroupId(id).subscribe(res => {
             this.listStatus = res;
-        })
-
-        this._tableService.getSelectBoxData("Products").subscribe(res => {
-            this.listProduct = res;
         })
     }
 
@@ -106,12 +101,12 @@ export class CreateDiscountComponent implements OnInit {
         this.submited = true;
 
         // kiểm tra form đã đc valid hay chưa
-        if (!this.infoForm.valid || this.discount.productDiscount.length == 0)
+        if (!this.infoForm.valid)
             return;
 
-        // thực hiện login khi đã được valid
-        this.discount = {
-            ...this.discount,
+        // // thực hiện login khi đã được valid
+        this.salecode = {
+            ...this.salecode,
             code: this.infoForm.get('code').value,
             name: this.infoForm.get('name').value,
             startTime: this.infoForm.get('startTime').value,
@@ -119,12 +114,14 @@ export class CreateDiscountComponent implements OnInit {
             saleType: this.infoForm.get('saleType').value,
             value: this.infoForm.get('value').value,
             status: this.infoForm.get('status').value,
+            stock : this.infoForm.get('stock').value,
+            stockByUser : this.infoForm.get('stockByUser').value,
+            minPrice : this.infoForm.get('minPrice').value,
         }
-
-        this._discountService.createDiscount(this.discount).subscribe(res => {
+        this._saleCodeService.createOrUpdate(this.salecode).subscribe(res => {
             // thêm thành công
             // config msg
-            let msg = this.discount.id == 0 ? 'Thêm mới' : 'Cập nhật'
+            let msg = this.salecode.id == 0 ? 'Thêm mới' : 'Cập nhật'
             if (res > 0) {
                 this.messageService.add({ severity: 'success', summary: 'Thành công', detail: msg + ' danh mục thành công' });
                 this.ref.close(true);
@@ -139,5 +136,6 @@ export class CreateDiscountComponent implements OnInit {
     close() {
         this.ref.close(false);
     }
+
 
 }

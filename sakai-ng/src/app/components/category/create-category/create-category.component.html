@@ -37,6 +37,6 @@
 
     <div class="flex justify-content-end">
         <button pButton pRipple type="button" label="Hủy bỏ" class="p-button-danger mr-1" (click)="close()"></button>
-        <button pButton pRipple type="button" label="Thêm mới" (click)="save()"></button>
+        <button pButton pRipple type="button" [label]="category.id==0?'Thêm mới':'Cập nhật'" (click)="save()"></button>
     </div>
 </form>

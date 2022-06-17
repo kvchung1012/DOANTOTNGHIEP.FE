@@ -18,7 +18,6 @@ export class AppInitService {
                 resolve(true);
             },
             err=>{
-                console.log('unauthorize',err)
                 this._router.navigate(['pages/login'])
                 resolve(true);
             })

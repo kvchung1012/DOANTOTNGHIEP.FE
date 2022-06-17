@@ -1,0 +1,82 @@
+<div class="layout-sidebar">
+    <div class="list-category">
+        <div class="category-item" (click)="chooseCategory(null)" [ngClass]="{'active': !currentCategory}">
+            <span>Tất cả</span>
+        </div>
+        <div class="category-item"
+                (click)="chooseCategory(item)"
+                *ngFor="let item of categories"
+                [ngClass]="{'active': currentCategory && currentCategory.id== item.id}">
+            <span>{{item.name}}</span>
+        </div>
+    </div>
+</div>
+<div >
+    <div class="card p-3" *ngIf="!currentCategory">
+        <p-carousel [value]="topProducts" [numVisible]="5" [numScroll]="5" [circular]="true" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
+            <ng-template pTemplate="header">
+                <h5 class="text-center">Danh sách sản phẩm nổi bật</h5>
+            </ng-template>
+            <ng-template let-product pTemplate="item">
+                <div class="card p-3 m-3">
+                    <div>
+                        <img style="width: 100%;height: 180px;border-radius: 10px;object-fit: cover;"
+                            [src]="getImagePath(product.image)" alt="" />
+                    </div>
+                    <div class="mt-1 flex justify-content-between">
+                        <div>
+                            <div class="pro-name"><strong>{{product.name}}</strong></div>
+                            <div class="flex price-item">
+                                <div class="old-price tp_product_price_old">
+                                    {{caculatePriceDiscount(product) | currency: 'VND':'symbol':'1.0-2'}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button pButton pRipple (click)="addToCart(product)"
+                                type="button"
+                                icon="pi pi-shopping-cart"
+                                class="p-button-rounded p-button-text">
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+
+
+    <div class="list-product grid">
+        <div class="md:col-3 item-pro col-12 p-3" *ngFor="let item of products">
+            <div class="card p-3">
+                <div class="image-pro w-100">
+                    <img class="w-100" [src]="getImagePath(item.image)" alt="" />
+                </div>
+                <div class="mt-2 flex justify-content-between">
+                    <div>
+                        <div class="pro-name">{{item.name}}</div>
+                        <div class="mt-2 flex price-item">
+                            <div class="pro-price pr-2" *ngIf="caculatePriceDiscount(item) != item.price">
+                                {{caculatePriceDiscount(item) | currency: 'VND':'symbol':'1.0-2'}}
+                            </div>
+                            <div class="tp_product_price_old" [ngClass]="{'old-price':caculatePriceDiscount(item) != item.price}">
+                                {{item.price | currency: 'VND':'symbol':'1.0-2'}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button pButton pRipple
+                            (click)="addToCart(item)"
+                            type="button"
+                            icon="pi pi-shopping-cart"
+                            class="p-button-rounded p-button-text"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

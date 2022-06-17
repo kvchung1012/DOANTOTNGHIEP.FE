@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { ConfigService } from './service/app.config.service';
 import { AppConfig } from './api/appconfig';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-main',
@@ -52,8 +53,8 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
     config: AppConfig;
 
     subscription: Subscription;
-    
-    constructor(public renderer: Renderer2, public app: AppComponent, public configService: ConfigService) { }
+
+    constructor(public renderer: Renderer2, public app: AppComponent, public configService: ConfigService, public _router: Router) { }
 
     ngOnInit() {
         this.config = this.configService.config;
@@ -178,5 +179,10 @@ export class AppMainComponent implements AfterViewInit, OnDestroy, OnInit {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    logout(){
+        localStorage.removeItem('token');
+        this._router.navigate(['pages/login'])
     }
 }

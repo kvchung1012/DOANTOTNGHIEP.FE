@@ -2,7 +2,7 @@
 	<div class="col-12">
         <div class="card">
             <div style="display: flex;" class="justify-content-between align-items-center">
-                <h5 class="m-0">Danh sách sản phẩm</h5>
+                <h5 class="m-0">Danh sách mã giảm giá</h5>
                 <div>
                     <!-- <button pButton pRipple icon="pi pi-eye" class="p-button-outlined" (click)="openShowHide()"></button> -->
                     <button pButton pRipple icon="pi pi-filter" class="p-button-outlined mr-3" (click)="openFilter()"></button>
@@ -23,7 +23,7 @@
                     columnResizeMode="expand">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
-                        <th class="col-width"
+                        <th
                             pResizableColumn
                             pReorderableColumn
                             pSortableColumn="{{col.columnName}}"
@@ -31,46 +31,41 @@
                             <p-sortIcon field="{{col.columnName}}"></p-sortIcon>
                         </th>
 
-                        <th style="width:120px !important" pFrozenColumn alignFrozen="right">
+                        <th style="width:120px" pFrozenColumn alignFrozen="right">
                             Hành động
                         </th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item let-columns="listColumnShow">
                     <tr [pReorderableRow]="index" >
-                        <td *ngFor="let col of listColumnShow" class="col-width">
+                        <td *ngFor="let col of listColumnShow">
                             <div [ngSwitch]="col.columnName">
 
-                                <div *ngSwitchCase="'image'" style="width: 80px; height: 80px;">
-                                    <img [src]="getImagePath(item[col.columnName])" class="w-full" style="object-fit: contain;">
+                                <div *ngSwitchCase="'saleType'">
+                                    {{!item[col.columnName]?'Phần trăm':'Tiền mặt'  }}
                                 </div>
 
-                                <!-- combo -->
-                                <div *ngSwitchCase="'isCombo'">
-                                    <span>{{ item[col.columnName] == 'true'?'Không':'Có'}}</span>
-                                </div>
-                                <!-- hai lai -->
-                                <div *ngSwitchCase="'isTop'">
-                                    <span>{{ item[col.columnName] == 'true'?'Không':'Có'}}</span>
+                                <div *ngSwitchCase="'value'">
+                                    {{item[col.columnName] + '' + (item['saleType'] ? ' VNĐ':'%' )  }}
                                 </div>
 
-                                <!-- price -->
-                                <div *ngSwitchCase="'price'">
-                                     <div [ngClass]="{'price-original' : caculatePriceDiscount(item) != item.price}">
-                                        <span>{{item[col.columnName] | currency: 'VND':'symbol':'1.0-2'}}</span>
-                                     </div>
-
-                                     <div class="price-sale" *ngIf="caculatePriceDiscount(item) != item.price">
-                                         <b>
-                                             {{caculatePriceDiscount(item) | currency: 'VND':'symbol':'1.0-2'}}
-                                         </b>
-                                     </div>
+                                <div *ngSwitchCase="'minPrice'">
+                                    {{item[col.columnName] +' VNĐ'}}
                                 </div>
-                                <div *ngSwitchDefault>
+
+                                <div *ngSwitchCase="'startTime'">
+                                    {{item[col.columnName] | date:'dd/MM/yyyy'}}
+                                </div>
+                                <div *ngSwitchCase="'endTime'">
+                                    {{!item[col.columnName]?'Mãi mãi':(item[col.columnName] | date:'dd/MM/yyyy')}}
+                                </div>
+                                <div *ngSwitchDefault="">
                                     {{item[col.columnName]}}
                                 </div>
                             </div>
                         </td>
+
+
                         <td style="width:120px" pFrozenColumn alignFrozen="right">
                             <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="edit(item)"></button>
                             <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger" (click)="deleteItem(item)"></button>

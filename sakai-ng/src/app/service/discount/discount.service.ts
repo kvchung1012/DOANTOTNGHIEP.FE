@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BaseParamModel, ListResult } from '../table/model/tableModel';
-import { CreateDiscountDto, GetDetailDiscount } from './model/discountModel';
+import { CreateDiscountDto, DiscountDto, GetDetailDiscount } from './model/discountModel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class DiscountService {
 
     getData(baseParam:BaseParamModel){
         const _url = `${this.baseUrl}/GetListDiscount`;
-        return this._http.post<ListResult<DiscountService>>(_url,baseParam);
+        return this._http.post<ListResult<DiscountDto>>(_url,baseParam);
     }
 
     createDiscount(discount: CreateDiscountDto){

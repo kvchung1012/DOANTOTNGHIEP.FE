@@ -1,0 +1,27 @@
+<div class="layout-wrapper layout-static">
+    <div class="layout-topbar">
+        <a class="layout-topbar-logo" routerLink="/client/index">
+            <img src="assets/layout/images/logo-dark.svg" alt="logo">
+            <span>Coffee Management</span>
+        </a>
+        <!-- <a class="p-link layout-menu-button layout-topbar-button" href="#" (click)="appMain.toggleMenu($event)">
+            <i class="pi pi-bars"></i>
+        </a> -->
+
+        <div class="layout-topbar-menu">
+            <button pButton pRipple (click)="openCart()" type="button" [label]="'Giỏ hàng('+_cartService.getTotalCart()+')'" icon="pi pi-shopping-cart" class="p-button-rounded p-button-text"></button>
+
+            <button *ngIf="infoUser==null" (click)="login()" pButton pRipple type="button" label="Đăng nhập" icon="pi pi-sign-in" class="p-button-rounded p-button-text"></button>
+            <button *ngIf="infoUser!=null" (click)="logout()" pButton pRipple type="button" [label]="infoUser.FullName" icon="pi pi-sign-out" class="p-button-rounded p-button-text p-button-danger"></button>
+       </div>
+    </div>
+    <div class="layout-main-container">
+        <div class="layout-main">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+<p-sidebar [(visible)]="isShowCart" position="right" [baseZIndex]="10000" [style]="{width:'30em',height:'100%'}">
+    <app-cart></app-cart>
+</p-sidebar>

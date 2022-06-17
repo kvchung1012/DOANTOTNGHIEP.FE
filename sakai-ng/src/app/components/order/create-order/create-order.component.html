@@ -39,11 +39,11 @@
                                     {{item.name}}
                                 </p>
 
-                                <div [ngClass]="{'price-original' : caculatePriceDiscount(item)>0}">
+                                <div [ngClass]="{'price-original' : caculatePriceDiscount(item)==item.price}">
                                     <p class="text-center">{{item.price | currency: 'VND':'symbol':'1.0-2'}}</p>
                                 </div>
 
-                                <div class="price-sale text-center" *ngIf="caculatePriceDiscount(item)>0">
+                                <div class="price-sale text-center" *ngIf="caculatePriceDiscount(item) != item.price">
                                     <b>
                                         {{caculatePriceDiscount(item) | currency: 'VND':'symbol':'1.0-2'}}
                                     </b>
@@ -88,9 +88,13 @@
                                     <button pButton pRipple type="button" icon="pi pi-plus" (click)="addStock(item)"
                                         class="p-button-sm p-button-rounded p-button-text"></button>
                                 </div>
-
                                 <div>
-                                    {{(item.product.price - caculatePriceDiscount(item.product) * item.stock) | currency: 'VND':'symbol':'1.0-2' }}
+                                    <div *ngIf="caculatePriceDiscount(item.product) == item.product.price">
+                                        {{item.product.price * item.stock | currency: 'VND':'symbol':'1.0-2' }}
+                                    </div>
+                                    <div *ngIf="caculatePriceDiscount(item.product) != item.product.price">
+                                        {{(caculatePriceDiscount(item.product) * item.stock) | currency: 'VND':'symbol':'1.0-2' }}
+                                    </div>
                                 </div>
                             </div>
                         </div>

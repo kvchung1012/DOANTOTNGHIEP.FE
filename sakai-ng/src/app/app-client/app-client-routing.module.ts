@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CartDetailComponent } from './cart-detail/cart-detail.component';
+import { CartResultComponent } from './cart-result/cart-result.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ListProductComponent } from './list-product/list-product.component';
 import { LoginClientComponent } from './login-client/login-client.component';
@@ -16,6 +17,9 @@ import { LoginClientComponent } from './login-client/login-client.component';
                     },
                     {
                         path: 'gio-hang', component: CartDetailComponent,
+                    },
+                    {
+                        path: 'ket-qua-thanh-toan', component: CartResultComponent,
                     }
                 ]
             },

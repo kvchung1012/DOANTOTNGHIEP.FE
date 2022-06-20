@@ -24,13 +24,19 @@ export class AppInterceptor implements HttpInterceptor {
                         // Refresh token here
                         // Pass
                         this._mes.add({ severity: 'error', summary: 'Lỗi', detail: error.error?.message || 'Thời gian đăng nhập hết hạn bạn cần đăng nhập lại!' });
-                        this._router.navigate(['pages/login'])
+                        if(req.url.includes('/Home/')){
+                            this._router.navigate(['/dang-nhap'])
+                        }
+                        else{
+                            this._router.navigate(['pages/login'])
+                        }
                     }
                     else if(error.status == HttpStatusCode.Forbidden){
                         // không có quyền truy cập tài nguyên
                         this._router.navigate(['pages/access'])
                     }
 
+                    console.log(error);
                     if (error.error) {
                         //Hiển thị lỗi trên các môi trường dev, testing
                         this._mes.add({ severity: 'error', summary: 'Lỗi', detail: error.error?.message || 'Không thể kết nối đến máy chủ, vui lòng kiểm tra lại đường truyền!' });

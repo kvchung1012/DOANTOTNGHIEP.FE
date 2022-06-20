@@ -83,6 +83,7 @@ export class CreateOrderComponent implements OnInit {
             receiveMoney:0,
             totalMoney:0
         }
+        this.carts.length = 0;
     }
 
     initData(){
@@ -215,11 +216,9 @@ export class CreateOrderComponent implements OnInit {
                 stock : x.stock
             }
         })
-
-        console.log(this.createCart);
-
         this._orderService.createCart(this.createCart).subscribe(res=>{
             if(res>0){
+                this.resetForm();
                 this._messageService.add({severity:'success', summary: 'Thành công', detail: 'Đặt hàng thành công'});
             }
             else{

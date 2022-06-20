@@ -25,6 +25,7 @@ export interface CreateCartOrder{
     customerName:string;
     customerPhone:string;
     customerEmail:string;
+    saleCode?:string;
     products: ProductCart[];
 
 }

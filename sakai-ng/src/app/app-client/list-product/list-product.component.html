@@ -1,6 +1,6 @@
 <div class="grid">
-    <div class="col-2">
-        <div class="list-category card">
+    <div class="col-3">
+        <div class="list-category card" style="height: 100%;">
             <div class="category-item" (click)="chooseCategory(null)" [ngClass]="{'active': !currentCategory}">
                 <span>Tất cả</span>
             </div>
@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="col-10">
+    <div class="col-9">
         <div class="card p-3" *ngIf="!currentCategory">
             <p-carousel [value]="topProducts" [numVisible]="5" [numScroll]="5" [circular]="true" [showIndicators]="false" [responsiveOptions]="responsiveOptions">
                 <ng-template pTemplate="header">

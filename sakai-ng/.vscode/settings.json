@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/97024ded-8d03-45e0-bfaf-79c6b4d2ee3c/microsoft.web/sites/subscriptions/97024ded-8d03-45e0-bfaf-79c6b4d2ee3c/resourceGroups/utc/providers/Microsoft.Web/sites/CoffeeWebClientUTC",
+    "appService.deploySubpath": "."
+}

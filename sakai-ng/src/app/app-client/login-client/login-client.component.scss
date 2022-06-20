@@ -1,0 +1,251 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    font-family: "Sarabun", sans-serif !important;
+  }
+
+  header {
+    padding: 8px 50px;
+    box-shadow: 0 0.125rem 0.625rem rgb(90 97 105 / 12%);
+  }
+
+  .logo img {
+    height: 50px;
+    object-fit: contain;
+  }
+  .formality {
+    padding: 5px 50px;
+  }
+  .list-unstyled {
+    padding-left: 0;
+    list-style: none;
+  }
+  .menu {
+    background: #f6f9ff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 1px #dbdbdb9e;
+  }
+  .menu-item {
+    padding: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .menu a {
+    text-decoration: none;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    color: #6d6f71;
+    font-weight: 500;
+  }
+  .list-menu .menu-item.active a,
+  .menu a:hover {
+    color: #00754a;
+  }
+  .title-menu {
+    color: rgba(0, 0, 0, 0.87);
+  }
+  .item-pro .image-pro {
+    height: 137px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .item-pro img {
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.8s ease;
+  }
+  .item-pro img:hover {
+    transform: scale(1.2);
+  }
+  .item-pro .pro-price,
+  .price-cart {
+    color: red;
+  }
+  .content-order,
+  .add-dash-border {
+    padding-bottom: 2px;
+    border-bottom: 2px dashed #ccc;
+  }
+  tr th,
+  tr td {
+    text-align: end;
+  }
+  tr th:first-child,
+  tr td:first-child {
+    text-align: start;
+  }
+  footer {
+    padding: 20px 30px;
+  }
+
+  footer a {
+    text-decoration: none;
+  }
+  .download-source {
+    overflow: hidden;
+  }
+
+  .download-source li {
+    margin-top: 18px;
+  }
+
+  .download-source li img {
+    width: 122px;
+    height: 40px;
+  }
+
+  .logo-footer img {
+    width: 100px;
+    height: 100px;
+    margin-top: 25px;
+    margin-bottom: 15px;
+  }
+
+  .logo-footer p {
+    font-size: 0.82rem;
+    color: #959595;
+  }
+
+  .social-network a {
+    padding: 5px;
+  }
+
+  .social-network i {
+    font-size: 1.75rem;
+    color: #959595;
+    transition: all 0.5s linear;
+  }
+
+  .social-network .fa-facebook:hover {
+    color: rgb(2, 136, 209);
+  }
+
+  .social-network .fa-instagram:hover {
+    color: rgb(186, 48, 167);
+  }
+
+  .image-license {
+    object-fit: contain;
+    width: 170px;
+  }
+
+  .title-footer {
+    font-weight: 600;
+    font-size: 1.12rem;
+  }
+
+  .block-last {
+    font-size: 0.95rem;
+  }
+
+  .block-last p {
+    margin-bottom: 3px;
+  }
+
+  .title-order {
+    font-size: 17px;
+    font-weight: 600;
+    padding-top: 5px;
+  }
+
+  .old-price {
+    text-decoration: line-through;
+  }
+  .price-item {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .cart {
+    position: relative;
+    box-shadow: 0px 0px 8px 1px #dbdbdb9e;
+    border-radius: 5px;
+  }
+  .btn-order {
+    position: absolute;
+    right: 8px;
+    bottom: 10px;
+  }
+  .btn-order button {
+    border: 0;
+    outline: none;
+    background: #00a862;
+    color: #f6f9ff;
+    padding: 3px 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 6px rgb(0 0 0 / 24%), 0 8px 12px rgb(0 0 0 / 14%);
+  }
+  .left-banner {
+    width: 50%;
+    height: 100vh;
+  }
+  .left-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .right-content {
+    background: #eff3f8;
+    width: 50%;
+  }
+
+  .list-inp input {
+    border: 1px solid #6f4e37;
+    padding: 6px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  .btn-login-account {
+    border: 0;
+    margin: 20px 0;
+    border-radius: 3px;
+    padding: 7px;
+    background: #6f4e37;
+    color: #fff;
+  }
+  .title-login-or {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+  }
+  .title-login-or span {
+    background: #fff;
+    padding: 0 10px;
+  }
+  .sign-gg-face button {
+    border: 1px solid #0288d1;
+    background: #fff;
+    padding: 5px;
+    height: 100%;
+    text-align: center;
+  }
+  .sign-gg-face span {
+    white-space: pre;
+    font-size: 0.9rem;
+    padding-left: 6px;
+  }
+
+  .info-customer{
+    background-color: #fff;
+    padding: 30px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .left-banner {
+        display: none;
+      }
+      .right-content {
+        width: 100%;
+        height: 100vh;
+      }
+
+      .info-customer{
+        margin: 20px;
+
+      }
+  }

@@ -7,6 +7,7 @@ export interface SaleCodeDto {
     stock: number;
     stockByUser: number;
     minPrice: number;
+    maxPriceSale: number;
     startTime: string;
     endTime: string;
     createdTime: string;
@@ -28,6 +29,7 @@ export interface CreateSaleCodeDto {
     stock: number;
     stockByUser: number;
     minPrice: number;
+    maxPriceSale:number;
     startTime: string;
     endTime: string;
     status: number;

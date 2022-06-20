@@ -37,6 +37,7 @@ export class CreateSalecodeComponent implements OnInit {
         saleType: null,
         value: 0,
         minPrice : 0,
+        maxPriceSale : 0,
         stock : 0,
         stockByUser :0
     };
@@ -77,6 +78,7 @@ export class CreateSalecodeComponent implements OnInit {
             value: [this.salecode.value, Validators.required],
             status: [this.salecode.status, [Validators.required, Validators.min(1)]],
             minPrice : [this.salecode.minPrice, Validators.required],
+            maxPriceSale : [this.salecode.maxPriceSale, Validators.nullValidator],
             stock : [this.salecode.stock, Validators.required],
             stockByUser : [this.salecode.stockByUser, Validators.required]
         })
@@ -117,6 +119,7 @@ export class CreateSalecodeComponent implements OnInit {
             stock : this.infoForm.get('stock').value,
             stockByUser : this.infoForm.get('stockByUser').value,
             minPrice : this.infoForm.get('minPrice').value,
+            maxPriceSale :this.infoForm.get('maxPriceSale').value,
         }
         this._saleCodeService.createOrUpdate(this.salecode).subscribe(res => {
             // thêm thành công
